@@ -6,7 +6,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import android.R
+import com.example.myapplication.R
+
 import com.example.myapplication.kotlinexss.Employee
 class MainActivity : AppCompatActivity() {
     //activiy is getting created -- chick is in the egg -- mem being allocated for activity
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //inflate this xml
-        setContentView(R.layout.activity_list_item)
+        setContentView(R.layout.activity_main)
         var name:String =  "abdul"
 
         Log.i(TAG,"activity is getting created")
