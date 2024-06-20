@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.util.Log
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Spinner
