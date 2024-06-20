@@ -8,6 +8,7 @@ public class CalculatorTest extends TestCase {
         super.setUp();
         calculator=new Calculator();
     }
+
     public void testAdd(){
         int expected=30;
         int actual=calculator.add(10,20);
