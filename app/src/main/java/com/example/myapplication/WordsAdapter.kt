@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-class WordsAdapter : RecyclerView.Adapter<WordsAdapter.WordsViewHolder>() {
+
 
     class WordsAdapter(var dataArray: Array<String>) :
         RecyclerView.Adapter<WordsAdapter.WordsViewHolder>() {
@@ -57,4 +57,5 @@ class WordsAdapter : RecyclerView.Adapter<WordsAdapter.WordsViewHolder>() {
         }
 
     }
-}
+
+

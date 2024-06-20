@@ -1,3 +1,4 @@
+package com.example.myapplication
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
            startActivity(webIntent)*/
         var c = 10 + 20
         add(10,20)
-        var hIntent:Intent = Intent(this,HomeActivity::class.java)
+        val hIntent:Intent = Intent(this,HomeActivity::class.java)
         hIntent.putExtra("mykey","android-vit-abdul")
         // throw NullPointerException("demo vit exception")
         startActivity(hIntent)
@@ -83,3 +84,5 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+
