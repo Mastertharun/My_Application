@@ -1,5 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">VIT batch1</string>
-    <string name="hint_entername">enter your name</string>
-    <string name="hint_enterpin">enter pin</string>
+        <string name="app_name">VIT batch1</string>
+        <string name="hint_entername">enter your name</string>
+        <string name="hint_enterpin">enter pin</string>
+        <string name="login_label">login</string>
+
 </resources>
