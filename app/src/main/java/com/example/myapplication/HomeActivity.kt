@@ -1,77 +1,75 @@
 package com.example.myapplication
+
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.AdapterView
+import android.widget.ListView
+import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.example.myapplication.database.Item
+import com.example.myapplication.database.ItemDao
+import com.example.myapplication.database.ItemRoomDatabase
 import com.example.myapplication.databinding.ActivityHomeBinding
-import com.example.myapplication.network.MarsApi
-import com.example.myapplication.network.MarsPhoto
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
-//wet code --- dry code -- repetative lines removed
-class HomeActivity : AppCompatActivity(){
-    var TAG = HomeActivity::class.java.simpleName    //"HomeActivity"
 
+class HomeActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
+    private val TAG = HomeActivity::class.java.simpleName
+    private lateinit var mySpinner: Spinner
+    private lateinit var myListView: ListView
     private lateinit var binding: ActivityHomeBinding
-    val photoMarsDatabinding = MarsPhoto("007","moonimage.com")
+    private lateinit var dao: ItemDao
 
-    //lateinit var marsRecyclerView:RecyclerView
-    lateinit var marsAdapter: MarsAdapter
-    lateinit var photos:List<MarsPhoto>
-    //  lateinit var imageView: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // setContentView(R.layout.activity_home)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val binding: ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        /* var homeTextView:TextView = findViewById(R.id.tvHome)
-         homeTextView.setText(photoMarsDatabinding.imgSrc)*/
-        binding.marsphotoxml = photoMarsDatabinding
 
-        // imageView = findViewById(R.id.imageView)
-        // imageView = findViewById(R.id.imageView)
-        // marsRecyclerView = findViewById(R.id.recyclerViewUrls)
-        binding.recyclerViewUrls.layoutManager = LinearLayoutManager(this)
-        photos = ArrayList()
-        marsAdapter = MarsAdapter(photos)
-        binding.recyclerViewUrls.adapter = marsAdapter
-        // marsAdapter = MarsAdapter(photos)
+        mySpinner = findViewById(R.id.spinner)
+        myListView = findViewById(R.id.listView)
+        myListView.isClickable = true
+
+        val database = ItemRoomDatabase.getDatabase(this)
+        dao = database.itemDao()
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-    }
-    private fun getMarsPhotos() {
-        GlobalScope.launch(Dispatchers.Main) {
-            //launching coroutines on the main thread is not advisable
-            var listMarsPhotos =   MarsApi.retrofitService.getPhotos()
-            // photos = listMarsPhotos
-            marsAdapter.listMarsPhotos = listMarsPhotos
-            //import coil.load
-            marsAdapter.notifyDataSetChanged()
-            //   var tvHome:TextView = findViewById(R.id.tvHome)
-//            tvHome.setText(listMarsPhotos.get(1).imgSrc)
-            //  binding.imageView.load()
-            Log.i("homeactiviy",listMarsPhotos.size.toString())
-            Log.i("homeactivity-url",listMarsPhotos.get(1).imgSrc)
+
+        binding.btnDbInsert.setOnClickListener {
+            insertDataDb()
         }
+
+        mySpinner.onItemSelectedListener = this
+        myListView.setOnItemClickListener(this)
     }
-    fun getJson(view: View) {
-        getMarsPhotos()
+
+    override fun onItemSelected(adapter: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val item: String = adapter?.getItemAtPosition(position).toString()
+        Log.i(TAG, item)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // Handle case where nothing is selected, if necessary
+    }
+
+    override fun onItemClick(adapter: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val item: String = adapter?.getItemAtPosition(position).toString()
+        Log.i(TAG, item)
+    }
+
+    private fun insertDataDb() {
+        GlobalScope.launch {
+            val item = Item(21, "fruits", 11.11, 11)
+            dao.insert(item)
+        }
     }
 }
