@@ -1,3 +1,4 @@
+
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -29,6 +30,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var viewModel: HomeViewModel
 
     var count = 0
+    //var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +44,10 @@ class HomeActivity : AppCompatActivity() {
 
         binding.tvHome.setText(""+count)
         //viewModel.count)
+        binding.tvHome.setText(""+viewModel.count)
         binding.btnDbInsert.setOnClickListener{
             insertDataDb()
         }
-
         binding.btnFind.setOnClickListener{
             findItemDb(21)
         }
@@ -55,21 +57,21 @@ class HomeActivity : AppCompatActivity() {
             //viewModel.incrementCount()
             binding.tvHome.setText(""+count)
             //+viewModel.count)
+            //count++
+            viewModel.incrementCount()
+            binding.tvHome.setText(""+viewModel.count)
         }
     }
 
     fun add(a:Int,b:Int):Int{
         return a+b
     }
-
     private fun findItemDb(id: Int) {
         GlobalScope.launch(Dispatchers.Main) {
             var item = dao.getItem(id).first()
             binding.tvHome.setText(item.itemName)
-            binding.tvHome.setText(item.itemName)
         }
     }
-
     private fun insertDataDb() {
         GlobalScope.launch {
             var item = Item(21,"fruits",11.11,11)

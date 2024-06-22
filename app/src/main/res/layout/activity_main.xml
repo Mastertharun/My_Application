@@ -31,11 +31,7 @@
         android:inputType="numberPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextText"
         app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-    <!--these colors are defined in android os
-    android:textColor="@android:color/holo_blue_light"-->
-    <!--
- dp = density independent pixels
--->
+
     <Button
         android:id="@+id/button"
         android:layout_width="100dp"
