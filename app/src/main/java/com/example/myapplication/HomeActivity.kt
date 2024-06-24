@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.HomeViewModel
 import com.example.myapplication.database.Item
@@ -28,10 +29,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     lateinit var dao: ItemDao
     lateinit var viewModel: HomeViewModel
-
-    var count = 0
     //var count = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,25 +39,25 @@ class HomeActivity : AppCompatActivity() {
         var  database = ItemRoomDatabase.getDatabase(this)
         dao = database.itemDao()
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        viewModel._seconds.observe(this, secsObserver);
 
-        binding.tvHome.setText(""+count)
-        //viewModel.count)
         binding.tvHome.setText(""+viewModel.count)
+        //binding.tvHome.setText(""+viewModel.count)
         binding.btnDbInsert.setOnClickListener{
             insertDataDb()
         }
         binding.btnFind.setOnClickListener{
             findItemDb(21)
         }
-
         binding.btnInc.setOnClickListener{
-            count++
-            //viewModel.incrementCount()
-            binding.tvHome.setText(""+count)
-            //+viewModel.count)
             //count++
             viewModel.incrementCount()
             binding.tvHome.setText(""+viewModel.count)
+        }
+
+        binding.btnTimer.setOnClickListener{
+            viewModel.startTimer()
+            binding.tvHome.setText(""+viewModel._seconds)
         }
     }
 
@@ -78,4 +76,13 @@ class HomeActivity : AppCompatActivity() {
             dao.insert(item)
         }
     }
+
+    var secsObserver : Observer<Int> = object :Observer<Int>{
+        override fun onChanged(observedValue: Int) {
+            //receiving the update/notification
+            binding.tvHome.setText(observedValue.toString())
+        }
+    }
+
+
 }
