@@ -1,4 +1,4 @@
-package com.example.myapplication.network
+/*package com.example.myapplication.network
 
 import com.squareup.moshi.Json
 import kotlinx.serialization.SerialName
@@ -17,4 +17,4 @@ data class MarsPhoto(
     @Json(name = "img_src")
     val imgSrc: String
 
-)
+)*/
