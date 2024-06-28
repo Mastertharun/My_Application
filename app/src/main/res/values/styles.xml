@@ -16,4 +16,9 @@
         <item name="android:background">@android:color/holo_orange_light</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
     </style>
+    <style name="myfontstyle">
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textColor">#f4a</item>
+        <item name="android:textSize">25sp</item>
+    </style>
 </resources>
